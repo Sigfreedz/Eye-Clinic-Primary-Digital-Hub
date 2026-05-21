@@ -327,6 +327,11 @@ function renderServicesSection() {
 
 function renderAboutSection() {
   const mapEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.123456!2d120.9915!3d14.6854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b0df2d1b2e3f%3A0x8a1f2b3c4d5e6f7a!2sVG%20%26%20Charm%20Sari%20Sari%20Store!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph';
+  const promoImages = [
+    { img: 'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=500&h=400&fit=crop', title: 'State-of-the-Art Equipment', desc: 'Advanced diagnostic technology for precise eye care.' },
+    { img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&h=400&fit=crop', title: 'Modern Optical Shop', desc: 'Wide selection of premium frames and lenses.' },
+    { img: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=500&h=400&fit=crop', title: 'Caring Environment', desc: 'Patient-first approach with compassionate staff.' }
+  ];
 
   return `
     <section class="section-wrap section-alt">
@@ -353,6 +358,25 @@ function renderAboutSection() {
             <div class="card border-0 shadow-sm h-100">
               <iframe class="w-100 h-100 rounded-3" style="min-height: 320px; border:0;" loading="lazy" src="${mapEmbed}" title="iDoctor Eye Clinic Map"></iframe>
             </div>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          ${sectionHeader('Clinic Highlights', 'Inside Our Clinic', 'A quick look at our equipment, optical shop, and patient-centered environment.')}
+          <div class="row g-4 mt-1">
+            ${promoImages.map((item) => `
+              <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100 hover-lift">
+                  <div class="promo-image-wrap">
+                    <img src="${item.img}" alt="${item.title}" loading="lazy">
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">${item.title}</h5>
+                    <p class="small text-muted mb-0">${item.desc}</p>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
           </div>
         </div>
 
