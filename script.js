@@ -556,7 +556,9 @@ function getStoredAppointments() {
   try {
     const raw = localStorage.getItem(APPOINTMENT_STORAGE_KEY);
     if (!raw) return [];
-    const parsed = JSON.parse(raw);
+    const decoded = decodeStoragePayload(raw);
+    if (!decoded) return [];
+    const parsed = JSON.parse(decoded);
     return Array.isArray(parsed) ? parsed : [];
   } catch {
     return [];
@@ -564,7 +566,25 @@ function getStoredAppointments() {
 }
 
 function saveStoredAppointments(data) {
-  localStorage.setItem(APPOINTMENT_STORAGE_KEY, JSON.stringify(data));
+  const serialized = JSON.stringify(data);
+  const encoded = encodeStoragePayload(serialized);
+  localStorage.setItem(APPOINTMENT_STORAGE_KEY, encoded);
+}
+
+function encodeStoragePayload(value) {
+  try {
+    return btoa(unescape(encodeURIComponent(value)));
+  } catch {
+    return '';
+  }
+}
+
+function decodeStoragePayload(value) {
+  try {
+    return decodeURIComponent(escape(atob(value)));
+  } catch {
+    return '';
+  }
 }
 
 function showBookingFeedback(message, type = 'success') {
