@@ -4,759 +4,204 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>IDoctor Eye Clinic | Valenzuela | Eyecare & Optical Shop</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f0f4f8;
-      color: #0a2540;
-      line-height: 1.5;
-      scroll-behavior: smooth;
-    }
-
-    :root {
-      --clinical-blue: #0f5c9e;
-      --clinical-dark: #08416e;
-      --accent-teal: #2c7da0;
-      --light-bg: #ffffff;
-      --soft-gray-bg: #eef2f8;
-      --section-alt-bg: #e8f0fe;
-      --border-light: #dce5ef;
-      --text-primary: #0f172a;
-      --text-secondary: #334155;
-      --success-green: #2b6e4e;
-    }
-
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-
-    /* Header */
-    .site-header {
-      background: white;
-      border-bottom: 1px solid var(--border-light);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(2px);
-      background-color: rgba(255,255,255,0.97);
-    }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding: 18px 0;
-    }
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      background: linear-gradient(135deg, var(--clinical-blue), #1f7ea3);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .logo span { color: var(--clinical-dark); background: none; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-    .nav-links a { font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
-    .nav-links a:hover { color: var(--clinical-blue); }
-
-    /* Homepage Styles */
-    .hero-home { background: linear-gradient(115deg, #e0ebf5 0%, #f5f9ff 100%); padding: 60px 0 48px; text-align: center; border-bottom: 1px solid var(--border-light); }
-    .hero-home h1 { font-size: 3rem; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, var(--clinical-blue), #1f7ea3); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero-home p { font-size: 1.2rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto; }
-    .about-preview { padding: 60px 0 40px; text-align: center; background: white; }
-    .about-preview h2 { font-size: 2rem; margin-bottom: 24px; color: var(--clinical-dark); }
-    .about-preview .about-text { max-width: 800px; margin: 0 auto 32px; color: var(--text-secondary); line-height: 1.7; }
-    .stats-row { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-top: 32px; }
-    .stat-item { text-align: center; background: var(--soft-gray-bg); padding: 16px 28px; border-radius: 32px; }
-    .stat-number { font-size: 2.2rem; font-weight: 700; color: var(--clinical-blue); }
-    .functions-section { background: var(--section-alt-bg); padding: 60px 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
-    .functions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    .function-card { background: white; border-radius: 28px; padding: 32px 24px; text-align: center; cursor: pointer; border: 1px solid var(--border-light); transition: all 0.3s; }
-    .function-card:hover { transform: translateY(-8px); border-color: var(--clinical-blue); }
-    .function-icon { font-size: 3rem; margin-bottom: 20px; }
-    .function-card h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--clinical-dark); }
-    .function-btn { background: transparent; border: 1.5px solid var(--clinical-blue); color: var(--clinical-blue); padding: 8px 24px; border-radius: 40px; font-weight: 600; margin-top: 20px; cursor: pointer; }
-    .function-btn:hover { background: var(--clinical-blue); color: white; }
-    .why-choose { padding: 60px 0; background: white; }
-    .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
-    .feature { text-align: center; padding: 20px; background: var(--soft-gray-bg); border-radius: 24px; }
-
-    /* Products Page */
-    .category-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 32px 0 24px; }
-    .filter-btn { background: white; border: 1px solid var(--border-light); padding: 8px 20px; border-radius: 40px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-    .filter-btn.active, .filter-btn:hover { background: var(--clinical-blue); border-color: var(--clinical-blue); color: white; }
-    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin: 36px 0; }
-    .product-card {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-      border: 1px solid var(--border-light);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .product-card:hover { transform: translateY(-4px); }
-    .product-img { width: 100%; height: 240px; background: #1a2a3a; overflow: hidden; }
-    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .product-card:hover .product-img img { transform: scale(1.05); }
-    .product-info {
-      padding: 18px;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .product-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
-    .product-price { color: var(--clinical-blue); font-weight: 700; margin-top: 4px; margin-bottom: 16px; }
-    .btn-shop {
-      background: #eef2ff;
-      color: #0f5c9e;
-      border: none;
-      padding: 10px 0;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-      margin-top: auto;
-      transition: all 0.2s;
-      font-size: 0.9rem;
-    }
-    .btn-shop:hover { background: var(--clinical-blue); color: white; }
-    .pagination { display: flex; justify-content: center; gap: 12px; margin: 20px 0 48px; }
-    .page-btn { background: white; border: 1px solid var(--border-light); padding: 8px 14px; border-radius: 8px; cursor: pointer; }
-    .page-btn.active-page { background: var(--clinical-blue); color: white; }
-
-    /* Custom Eyeglasses Section */
-    .custom-section {
-      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-      border-radius: 32px;
-      padding: 40px;
-      margin: 40px 0 60px;
-      border: 1px solid var(--border-light);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-    }
-    .custom-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--clinical-dark);
-      margin-bottom: 8px;
-      text-align: center;
-    }
-    .custom-sub {
-      text-align: center;
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-    }
-    .custom-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      margin-bottom: 32px;
-    }
-    .option-group {
-      background: white;
-      padding: 24px;
-      border-radius: 24px;
-      border: 1px solid var(--border-light);
-    }
-    .option-group h3 {
-      font-size: 1.2rem;
-      margin-bottom: 16px;
-      color: var(--clinical-dark);
-      border-left: 4px solid var(--clinical-blue);
-      padding-left: 12px;
-    }
-    .option-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .opt-btn {
-      background: #f1f5f9;
-      border: 1.5px solid var(--border-light);
-      padding: 8px 18px;
-      border-radius: 40px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: var(--text-secondary);
-    }
-    .opt-btn.selected {
-      background: var(--clinical-blue);
-      border-color: var(--clinical-blue);
-      color: white;
-    }
-    .receipt {
-      background: #f8fafc;
-      border-radius: 24px;
-      padding: 24px;
-      margin-top: 24px;
-      border: 1px solid var(--border-light);
-    }
-    .receipt h4 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
-      color: var(--clinical-dark);
-    }
-    .receipt-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px dashed var(--border-light);
-    }
-    .receipt-total {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--clinical-dark);
-      border-top: 2px solid var(--border-light);
-      margin-top: 8px;
-    }
-    .btn-add-to-cart {
-      background: var(--clinical-blue);
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 20px;
-      transition: all 0.2s;
-    }
-    .btn-add-to-cart:hover {
-      background: var(--clinical-dark);
-      transform: translateY(-2px);
-    }
-
-    /* Services Page */
-    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin: 40px 0; }
-    .service-card { background: white; border-radius: 24px; padding: 32px; border: 1px solid var(--border-light); }
-    .service-card h3 { font-size: 1.5rem; margin-bottom: 12px; color: var(--clinical-dark); }
-    .service-card p { color: var(--text-secondary); line-height: 1.6; }
-    .appointment-cta { text-align: center; padding: 40px; background: linear-gradient(115deg, #eef2ff, white); border-radius: 32px; margin: 32px 0; }
-    .appointment-cta h3 { font-size: 1.8rem; margin-bottom: 12px; color: var(--clinical-dark); }
-    .btn-appointment-large { background: var(--clinical-blue); color: white; border: none; padding: 14px 36px; border-radius: 60px; font-weight: 700; font-size: 1.1rem; cursor: pointer; }
-
-    /* About Page */
-    .page-hero {
-      background: linear-gradient(120deg, #eef4ff 0%, #ffffff 100%);
-      padding: 48px 0 56px;
-      text-align: center;
-      border-bottom: 1px solid var(--border-light);
-    }
-    .hero-title {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .promo-gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin: 40px 0 48px;
-    }
-    .promo-card {
-      background: white;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease;
-      border: 1px solid var(--border-light);
-    }
-    .promo-card:hover { transform: translateY(-6px); }
-    .promo-img { width: 100%; height: 200px; overflow: hidden; }
-    .promo-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
-    .promo-content { padding: 18px; }
-    .promo-title { font-weight: 700; font-size: 1.1rem; color: var(--clinical-dark); margin-bottom: 6px; }
-    .promo-desc { font-size: 0.85rem; color: var(--text-secondary); }
-    
-    .doctors-section {
-      margin: 48px 0 56px;
-      background: var(--soft-gray-bg);
-      padding: 40px 0;
-      border-radius: 48px;
-    }
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-      font-size: 1.1rem;
-    }
-    .doctors-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      margin-top: 20px;
-    }
-    .doctor-card {
-      background: white;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-      border: 1px solid var(--border-light);
-      text-align: center;
-    }
-    .doctor-card:hover { transform: translateY(-8px); }
-    .doctor-img { width: 100%; height: 260px; background: linear-gradient(135deg, #e0e7ff, #f1f5f9); overflow: hidden; }
-    .doctor-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-    .doctor-info { padding: 20px 20px 24px; }
-    .doctor-name { font-size: 1.4rem; font-weight: 700; color: var(--clinical-dark); margin-bottom: 6px; }
-    .doctor-title { font-size: 0.85rem; font-weight: 600; color: var(--clinical-blue); background: #eef2ff; display: inline-block; padding: 4px 12px; border-radius: 40px; margin-bottom: 12px; }
-    .doctor-specialty { font-size: 0.9rem; color: var(--text-primary); font-weight: 500; margin-bottom: 8px; }
-    .doctor-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
-    .doctor-contact { font-size: 0.75rem; color: var(--success-green); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-light); }
-    
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin: 40px 0 40px;
-    }
-    .contact-block {
-      background: white;
-      padding: 24px;
-      border-radius: 28px;
-      margin-top: 28px;
-      border: 1px solid var(--border-light);
-    }
-    .map-container {
-      background: #eef2ff;
-      border-radius: 28px;
-      height: 420px;
-      width: 100%;
-      overflow: hidden;
-      border: 1px solid var(--border-light);
-    }
-    .map-iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-    .directions-link {
-      display: inline-block;
-      margin-top: 12px;
-      background: var(--clinical-blue);
-      color: white;
-      padding: 10px 18px;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      border: none;
-    }
-    .directions-link:hover { background: var(--clinical-dark); }
-    .map-footer {
-      padding: 12px 16px;
-      background: #f8fafc;
-      border-top: 1px solid var(--border-light);
-      text-align: center;
-    }
-
-    /* Footer */
-    .footer { background: #0f172a; color: #cbd5e1; padding: 48px 0 24px; margin-top: 48px; }
-    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
-    .footer-col h4 { color: white; margin-bottom: 16px; }
-    .footer-col a { display: block; margin-bottom: 10px; color: #94a3b8; transition: color 0.2s; }
-    .footer-col a:hover { color: white; }
-    .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 32px; padding-top: 24px; }
-
-    /* MODAL */
-    .modal-bg {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1000; visibility: hidden; opacity: 0; transition: 0.2s;
-    }
-    .modal-card {
-      background: white; width: 580px; max-width: 90vw; border-radius: 32px;
-      padding: 24px 28px; max-height: 85vh; overflow-y: auto;
-    }
-    .modal-card h3 { font-size: 1.6rem; margin-bottom: 4px; color: var(--clinical-dark); }
-    .modal-card .sub { color: var(--text-secondary); margin-bottom: 20px; font-size: 0.85rem; }
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.85rem; }
-    .form-group input, .form-group select { width: 100%; padding: 8px 12px; border-radius: 14px; border: 1px solid var(--border-light); font-family: inherit; font-size: 0.85rem; }
-    .double-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .modal-actions { display: flex; gap: 12px; margin-top: 20px; }
-    .btn-primary-modal { background: var(--clinical-blue); color: white; border: none; padding: 10px; border-radius: 40px; font-weight: 700; flex: 1; cursor: pointer; }
-    .btn-secondary-modal { background: #eef2ff; color: var(--clinical-dark); border: none; padding: 10px; border-radius: 40px; font-weight: 600; flex: 1; cursor: pointer; }
-    .service-radio-group { display: flex; gap: 16px; flex-wrap: nowrap; }
-    .service-radio-group label { display: inline-flex; align-items: center; gap: 8px; background: #f8fafc; padding: 8px 18px; border-radius: 40px; border: 1px solid var(--border-light); white-space: nowrap; cursor: pointer; }
-    .service-radio-group input[type="radio"] { width: 16px; height: 16px; accent-color: var(--clinical-blue); margin: 0; }
-    
-    .branch-options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 6px;
-    }
-    .branch-card {
-      border: 2px solid var(--border-light);
-      border-radius: 16px;
-      padding: 14px 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: white;
-    }
-    .branch-card:hover {
-      border-color: var(--clinical-blue);
-      background: #f0f7ff;
-    }
-    .branch-card.selected {
-      border-color: var(--clinical-blue);
-      background: #e6f0ff;
-    }
-    .branch-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    .branch-radio {
-      width: 18px !important;
-      height: 18px !important;
-      min-width: 18px;
-      margin-top: 2px;
-      accent-color: var(--clinical-blue);
-      cursor: pointer;
-    }
-    .branch-content {
-      flex: 1;
-    }
-    .branch-name {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--clinical-dark);
-      margin-bottom: 4px;
-    }
-    .branch-address {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-bottom: 3px;
-    }
-    .branch-hours {
-      font-size: 0.7rem;
-      color: var(--success-green);
-    }
-
-    @media (max-width: 800px) {
-      .functions-grid, .product-grid, .promo-gallery, .doctors-grid, .features-grid, .custom-options {
-        grid-template-columns: 1fr;
-      }
-      .about-grid { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      .hero-home h1 { font-size: 2rem; }
-      .service-radio-group { flex-wrap: wrap; }
-      .service-radio-group label { white-space: nowrap; }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8R7Y+f8f6mQv0Q5Q1QdYx04dM6xgM2Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="site-header">
-  <div class="container header-inner">
-    <div class="logo">IDoctor <span>Eye Clinic</span></div>
-    <div class="nav-links">
-      <a href="#" data-nav="home">Home</a>
-      <a href="#" data-nav="products">Products</a>
-      <a href="#" data-nav="services">Services</a>
-      <a href="#" data-nav="about">About Us</a>
-    </div>
-  </div>
-</div>
-
-<main id="main-content"></main>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-col">
-        <h4>IDoctor Eye Clinic</h4>
-        <p>Precision eye care & premium optics</p>
-        <p>📍 Main: Gen T De Leon, Beside 3S Center, Valenzuela</p>
-        <p>📞 0923 727 2113</p>
-        <p>✉️ idoctorvisioncaremarketing@gmail.com</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <a href="#" data-nav="products">Shop Eyewear</a>
-        <a href="#" data-nav="services">Medical Services</a>
-        <a href="#" data-nav="about">About Us</a>
-        <a href="#" id="footerPortalLink">🔐 Patient Portal</a>
-      </div>
-      <div class="footer-col">
-        <h4>Follow Us</h4>
-        <a href="https://www.instagram.com/idoctorvisioncare/">Instagram</a>
-        <a href="https://www.facebook.com/iDoctorVisionCareClinic">Facebook</a>
+  <nav class="navbar navbar-expand-lg sticky-top glass-nav py-3" id="siteNavbar">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#" data-nav="home">iDoctor <span>Eye Clinic</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="siteNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#" data-nav="home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-nav="products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-nav="services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-nav="about">About Us</a></li>
+          <li class="nav-item ms-lg-2 mt-2 mt-lg-0"><button class="btn btn-brand btn-sm px-3" id="navBookBtn">Book Appointment</button></li>
+        </ul>
       </div>
     </div>
-    <div class="footer-bottom"><p>© 2025 IDoctor Eye Clinic — excellence in vision | Valenzuela, Metro Manila</p></div>
-  </div>
-</footer>
+  </nav>
 
-<!-- MODAL -->
-<div id="bookingModal" class="modal-bg"><div class="modal-card"><h3>Schedule an Appointment</h3><div class="sub">Fill your details to confirm your visit</div><form id="appointmentForm"><div class="double-group"><div class="form-group"><label>First Name *</label><input type="text" id="firstName" required placeholder="Juan"></div><div class="form-group"><label>Last Name *</label><input type="text" id="lastName" required placeholder="Dela Cruz"></div></div><div class="form-group"><label>Contact Number *</label><input type="tel" id="contactNumber" required placeholder="0923 727 2113"></div><div class="form-group"><label>Email</label><input type="email" id="emailAddress" placeholder="patient@example.com"></div><div class="form-group"><label>📍 Select Branch *</label><div class="branch-options" id="branchOptions"></div></div><div class="form-group"><label>Appointment Type *</label><div class="service-radio-group"><label><input type="radio" name="appointmentService" value="Eye Exam"> 👁️ Eye Exam</label><label><input type="radio" name="appointmentService" value="Surgery Consultation"> 👨‍⚕️ Surgery Consult</label><label><input type="radio" name="appointmentService" value="Follow-up"> 📋 Follow-up</label></div></div><div class="form-group"><label>Specific Service *</label><select id="specificService" required><option value="">-- Select --</option><option>Comprehensive Eye Exam</option><option>Cataract Surgery Pre-op</option><option>Glaucoma Screening</option><option>LASIK Consultation</option><option>Pediatric Eye Care</option></select></div><div class="double-group"><div class="form-group"><label>Preferred Date *</label><input type="date" id="apptDate" required></div><div class="form-group"><label>Preferred Time *</label><select id="apptTime" required><option value="">Select</option><option>09:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>01:00 PM</option><option>02:00 PM</option><option>03:00 PM</option><option>04:00 PM</option></select></div></div><div class="modal-actions"><button type="button" id="confirmBookingBtn" class="btn-primary-modal">Confirm Booking</button><button type="button" id="closeModalBtn" class="btn-secondary-modal">Cancel</button></div></form></div></div>
+  <main id="main-content"></main>
 
-<script>
-  // BRANCHES
-  const branches = [
-    { id: 1, name: "IDoctor Eye Clinic - Main Branch", address: "Gen T De Leon, Beside 3S Center, Valenzuela City", hours: "Mon-Sat: 8AM - 7PM | Sun: 9AM - 5PM" },
-    { id: 2, name: "IDoctor Eye Clinic - Karuhatan", address: "McArthur Highway, Karuhatan, Valenzuela City", hours: "Mon-Sat: 9AM - 7PM" },
-    { id: 3, name: "IDoctor Eye Clinic - Malinta", address: "Malinta Road corner Poblacion, Valenzuela City", hours: "Mon-Fri: 8AM - 6PM, Sat: 9AM - 5PM" }
-  ];
-  let selectedBranchId = 1;
-
-  // PRODUCTS - All prices in Philippine Pesos (₱)
-  const allProducts = [
-    { id: 1, name: "Cat Eye Reading Glasses", price: 1290, category: "Eye Glasses", imgSrc: "cat eye glasses.jpeg" },
-    { id: 2, name: "Round Eye Glasses", price: 1590, category: "Eye Glasses", imgSrc: "round eye glasses.jpeg" },
-    { id: 3, name: "Chunky Reading Glasses", price: 890, category: "Eye Glasses", imgSrc: "chunky style glasses.jpeg" },
-    { id: 4, name: "Aviator Sunglasses", price: 1190, category: "Sun Glasses", imgSrc: "aviator glasses.jpeg" },
-    { id: 5, name: "Square Reading Glasses", price: 990, category: "Eye Glasses", imgSrc: "square reading glasses.jpeg" },
-    { id: 6, name: "Modern Cat Eye Sunglasses", price: 1390, category: "Sun Glasses", imgSrc: "modern cat eye glasses.jpeg" },
-    { id: 7, name: "Multi-Purpose Contact Lens Solution (360ml)", price: 350, category: "Accessories", imgSrc: "multipurpose solution.png" },
-    { id: 8, name: "Contact Lens Cleaning & Storage Kit", price: 250, category: "Accessories", imgSrc: "contact lens cleaning kit.png" },
-    { id: 9, name: "Premium Contact Lens Case (Twin Pack)", price: 120, category: "Accessories", imgSrc: "premium contact lenses.png" },
-    { id: 10, name: "Eyeglass Hard Shell Case", price: 299, category: "Accessories", imgSrc: "hard shell case.png" },
-    { id: 11, name: "Microfiber Cleaning Cloth (3-Pack)", price: 180, category: "Accessories", imgSrc: "microfiber 3pack.png" },
-    { id: 12, name: "Lens Cleaning Spray + Cloth Set", price: 220, category: "Accessories", imgSrc: "contact lens cleaning kit.png" }
-  ];
-
-  const servicesList = [
-    { title: "Optometry & Ophthalmology", desc: "Comprehensive eye exams, vision testing, and medical eye care using state-of-the-art diagnostic equipment." },
-    { title: "Cataract Surgery Consultation", desc: "Personalized pre-surgery evaluation with advanced lens implant options from diagnosis to post-op care." },
-    { title: "Glaucoma Screening & Management", desc: "Early detection through tonometry, visual field testing, and OCT scans with medical and surgical management." },
-    { title: "Pediatric Eye Care", desc: "Children's vision development assessment, amblyopia treatment, and specialty lenses in a child-friendly environment." }
-  ];
-
-  // CUSTOMIZER PRICES CONVERTED TO PHILIPPINE PESOS (₱)
-  const frameStyles = [
-    { name: "Browline", price: 0 }, { name: "Rectangle", price: 0 }, { name: "Oval", price: 0 },
-    { name: "Round", price: 0 }, { name: "Cat-eye", price: 580 }, { name: "Square", price: 0 },
-    { name: "Aviator", price: 870 }, { name: "Wayfarer", price: 290 }
-  ];
-  const lensTypes = [
-    { name: "Standard Clear", price: 0 }, { name: "Polarized", price: 2600 }, { name: "Scratch-Resistant", price: 1450 },
-    { name: "Blue Light Resistant", price: 2030 }, { name: "Anti-Reflective", price: 1740 },
-    { name: "Anti-Radiation", price: 1620 }, { name: "Photochromic", price: 4060 }
-  ];
-
-  let currentView = "home";
-  let activeCategory = "All", currentPage = 1;
-  let selectedFrame = frameStyles[0];
-  let selectedLens = lensTypes[0];
-
-  function getFilteredProducts() { 
-    if (activeCategory === "All") return allProducts; 
-    return allProducts.filter(p => p.category === activeCategory); 
-  }
-  function getPaginatedProducts() { 
-    const f = getFilteredProducts(); 
-    return f.slice((currentPage-1)*6, currentPage*6); 
-  }
-  function totalPages() { 
-    return Math.ceil(getFilteredProducts().length / 6); 
-  }
-
-  function formatPHP(price) {
-    return `₱${price.toLocaleString()}`;
-  }
-
-  function renderCustomizer() {
-    return `
-      <div class="custom-section">
-        <div class="custom-title">🕶️ Customize My Eyeglasses</div>
-        <div class="custom-sub">Design your perfect pair — choose frame style and lens features</div>
-        <div class="custom-options">
-          <div class="option-group"><h3>👓 Frame Style</h3><div class="option-buttons" id="frameOptions">${frameStyles.map(f => `<button class="opt-btn ${selectedFrame.name === f.name ? 'selected' : ''}" data-frame="${f.name}" data-price="${f.price}">${f.name} ${f.price > 0 ? `+${formatPHP(f.price)}` : ''}</button>`).join('')}</div></div>
-          <div class="option-group"><h3>🔬 Lens Type</h3><div class="option-buttons" id="lensOptions">${lensTypes.map(l => `<button class="opt-btn ${selectedLens.name === l.name ? 'selected' : ''}" data-lens="${l.name}" data-price="${l.price}">${l.name} ${l.price > 0 ? `+${formatPHP(l.price)}` : ''}</button>`).join('')}</div></div>
+  <footer class="footer-dark py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <h5 class="text-white fw-bold">iDoctor Eye Clinic</h5>
+          <p class="mb-0">Your Vision, Our Priority.</p>
         </div>
-        <div class="receipt" id="customReceipt"><h4>📋 Your Custom Order Receipt</h4><div class="receipt-item"><span>Frame: ${selectedFrame.name}</span><span>${formatPHP(selectedFrame.price)}</span></div><div class="receipt-item"><span>Lens: ${selectedLens.name}</span><span>${formatPHP(selectedLens.price)}</span></div><div class="receipt-total"><span>Total</span><span>${formatPHP(selectedFrame.price + selectedLens.price)}</span></div></div>
-        <button class="btn-add-to-cart" id="addToCartBtn">Add to Cart & Request Prescription Fitting →</button>
-        <div class="note-text" style="font-size:0.75rem; text-align:center; margin-top:12px;">* Prices are in Philippine Pesos (₱). Visit our clinic for prescription lens fitting.</div>
+        <div class="col-md-6 col-lg-3">
+          <h6 class="text-white fw-semibold mb-3">Quick Links</h6>
+          <div class="d-grid gap-2 small">
+            <a href="#" data-nav="home">Home</a>
+            <a href="#" data-nav="products">Products</a>
+            <a href="#" data-nav="services">Services</a>
+            <a href="#" data-nav="about">About Us</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h6 class="text-white fw-semibold mb-3">Services</h6>
+          <ul class="list-unstyled small d-grid gap-2 mb-0">
+            <li>Optometry &amp; Ophthalmology</li>
+            <li>Cataract Surgery Consultation</li>
+            <li>Glaucoma Screening</li>
+            <li>Pediatric Eye Care</li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h6 class="text-white fw-semibold mb-3">Contact</h6>
+          <ul class="list-unstyled small d-grid gap-2 mb-0">
+            <li>📞 0923 727 2113</li>
+            <li>✉️ idoctorvisioncaremarketing@gmail.com</li>
+            <li><a target="_blank" rel="noopener" href="https://www.facebook.com/iDoctorVisionCareClinic">Facebook</a></li>
+            <li><a target="_blank" rel="noopener" href="https://www.instagram.com/idoctorvisioncare/">Instagram</a></li>
+          </ul>
+        </div>
       </div>
-    `;
-  }
+      <hr class="border-secondary my-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between small gap-2">
+        <span>© 2026 iDoctor Eye Clinic. All rights reserved.</span>
+        <span>Developed for WSS101 — PLV BSIT 2-7</span>
+      </div>
+    </div>
+  </footer>
 
-  function attachCustomizerEvents() {
-    document.querySelectorAll("[data-frame]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const frameName = btn.getAttribute("data-frame");
-        const framePrice = parseFloat(btn.getAttribute("data-price"));
-        selectedFrame = frameStyles.find(f => f.name === frameName) || { name: frameName, price: framePrice };
-        document.querySelectorAll("[data-frame]").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        updateReceipt();
-      });
-    });
-    document.querySelectorAll("[data-lens]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const lensName = btn.getAttribute("data-lens");
-        const lensPrice = parseFloat(btn.getAttribute("data-price"));
-        selectedLens = lensTypes.find(l => l.name === lensName) || { name: lensName, price: lensPrice };
-        document.querySelectorAll("[data-lens]").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        updateReceipt();
-      });
-    });
-    const addBtn = document.getElementById("addToCartBtn");
-    if(addBtn) addBtn.addEventListener("click", () => alert(`✅ Added to Cart!\nFrame: ${selectedFrame.name} (${formatPHP(selectedFrame.price)})\nLens: ${selectedLens.name} (${formatPHP(selectedLens.price)})\nTotal: ${formatPHP(selectedFrame.price + selectedLens.price)}\n\nVisit our clinic for prescription fitting.`));
-  }
+  <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header border-0 pb-0">
+          <div>
+            <h5 class="modal-title fw-bold" id="bookingModalLabel">Schedule an Appointment</h5>
+            <p class="text-muted small mb-0">Fill in your details and we will contact you to confirm.</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body pt-3">
+          <div id="bookingFeedback" class="d-none"></div>
+          <form id="appointmentForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name *</label>
+                <input type="text" class="form-control" id="firstName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name *</label>
+                <input type="text" class="form-control" id="lastName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="contactNumber" class="form-label">Contact Number *</label>
+                <input type="text" class="form-control" id="contactNumber" required placeholder="0923 727 2113">
+              </div>
+              <div class="col-md-6">
+                <label for="emailAddress" class="form-label">Email</label>
+                <input type="email" class="form-control" id="emailAddress" placeholder="patient@example.com">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Select Branch *</label>
+                <div id="branchOptions" class="row g-2"></div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Appointment Type *</label>
+                <div class="d-flex flex-wrap gap-2" id="appointmentTypeOptions">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="appointmentService" id="typeExam" value="Eye Exam" checked>
+                    <label class="form-check-label" for="typeExam">Eye Exam</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="appointmentService" id="typeSurgery" value="Surgery Consultation">
+                    <label class="form-check-label" for="typeSurgery">Surgery Consultation</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="appointmentService" id="typeFollowup" value="Follow-up">
+                    <label class="form-check-label" for="typeFollowup">Follow-up</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="specificService" class="form-label">Specific Service *</label>
+                <select id="specificService" class="form-select" required>
+                  <option value="">Select</option>
+                  <option>Comprehensive Eye Exam</option>
+                  <option>Cataract Surgery Pre-op</option>
+                  <option>Glaucoma Screening</option>
+                  <option>LASIK Consultation</option>
+                  <option>Pediatric Eye Care</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="apptDate" class="form-label">Preferred Date *</label>
+                <input type="date" class="form-control" id="apptDate" required>
+              </div>
+              <div class="col-md-3">
+                <label for="apptTime" class="form-label">Preferred Time *</label>
+                <select id="apptTime" class="form-select" required>
+                  <option value="">Select</option>
+                  <option>09:00 AM</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>01:00 PM</option>
+                  <option>02:00 PM</option>
+                  <option>03:00 PM</option>
+                  <option>04:00 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer border-0 px-0 pb-0 pt-4">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-brand">Confirm Booking</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  function updateReceipt() {
-    const receipt = document.getElementById("customReceipt");
-    if(receipt) {
-      const total = selectedFrame.price + selectedLens.price;
-      receipt.innerHTML = `<h4>📋 Your Custom Order Receipt</h4><div class="receipt-item"><span>Frame: ${selectedFrame.name}</span><span>${formatPHP(selectedFrame.price)}</span></div><div class="receipt-item"><span>Lens: ${selectedLens.name}</span><span>${formatPHP(selectedLens.price)}</span></div><div class="receipt-total"><span>Total</span><span>${formatPHP(total)}</span></div>`;
-    }
-  }
-
-  function renderProductsSection() {
-    const products = getPaginatedProducts(), total = totalPages();
-    return `<div class="container"><div class="page-hero"><h2 class="hero-title">Premium Eyewear & Optics</h2><p>Authentic brands, precise prescription lenses, and essential accessories</p></div><div class="category-bar">${["All","Eye Glasses","Sun Glasses","Accessories"].map(c => `<button class="filter-btn ${activeCategory===c?'active':''}" data-cat="${c}">${c}</button>`).join('')}</div><div class="product-grid">${products.map(p => `<div class="product-card"><div class="product-img"><img src="${p.imgSrc}" alt="${p.name}"></div><div class="product-info"><div class="product-title">${p.name}</div><div class="product-price">${formatPHP(p.price)}</div><button class="btn-shop" data-product="${p.name}" data-price="${p.price}">🛒 Shop now</button></div></div>`).join('')}</div><div class="pagination">${Array.from({length:total},(_,i)=>`<button class="page-btn ${currentPage===i+1?'active-page':''}" data-page="${i+1}">${i+1}</button>`).join('')}</div>${renderCustomizer()}</div>`;
-  }
-
-  function renderAboutSection() {
-    const promoImages = [
-      { img: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=500&h=400&fit=crop", title: "State-of-the-Art Equipment", desc: "Advanced diagnostic technology for precise eye care." },
-      { img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&h=400&fit=crop", title: "Modern Optical Shop", desc: "Wide selection of premium frames and lenses." },
-      { img: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=500&h=400&fit=crop", title: "Caring Environment", desc: "Patient-first approach with compassionate staff." }
-    ];
-    const doctors = [
-      { name: "Dr. Maria R. Santiago", title: "Chief Ophthalmologist", specialty: "Cataract & Refractive Surgery", desc: "15+ years experience, fellowship-trained in advanced cataract techniques.", contact: "📞 0917 123 4567 | ✉️ dr.santiago@idoctor.com", img: "https://randomuser.me/api/portraits/women/68.jpg" },
-      { name: "Dr. Jose M. Dela Cruz", title: "Senior Optometrist", specialty: "Pediatric & Binocular Vision", desc: "Specializes in children's eye development and complex prescriptions.", contact: "📞 0918 234 5678 | ✉️ dr.delacruz@idoctor.com", img: "https://randomuser.me/api/portraits/men/32.jpg" },
-      { name: "Dr. Anna Liza R. Villanueva", title: "Glaucoma Specialist", specialty: "Glaucoma & Diabetic Eye Care", desc: "Leading expert in minimally invasive glaucoma surgery.", contact: "📞 0919 345 6789 | ✉️ dr.villanueva@idoctor.com", img: "https://randomuser.me/api/portraits/women/45.jpg" }
-    ];
-    const mapEmbed = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.123456!2d120.9915!3d14.6854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b0df2d1b2e3f%3A0x8a1f2b3c4d5e6f7a!2sVG%20%26%20Charm%20Sari%20Sari%20Store!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph`;
-    const directionsUrl = "https://www.google.com/maps/dir/14.6737334,121.0406657/14.6854041,120.9914723";
-    return `<div class="container"><div class="page-hero"><h2 class="hero-title">About IDoctor Eye Clinic</h2><p>Your trusted partner for clear vision and lifelong eye health in Valenzuela</p></div><div class="promo-gallery">${promoImages.map(p => `<div class="promo-card"><div class="promo-img"><img src="${p.img}" alt="${p.title}"></div><div class="promo-content"><div class="promo-title">${p.title}</div><div class="promo-desc">${p.desc}</div></div></div>`).join('')}</div><div class="about-grid"><div><h3 style="font-size:1.8rem;">Who We Are</h3><p style="margin-top:16px;">IDoctor blends medical excellence with boutique optical retail. We provide advanced diagnostics, cataract & glaucoma care, and pediatric services. With 3 branches across Valenzuela, we bring expert eye care closer to you.</p><div class="contact-block"><h4>📞 Contact Details</h4><p><strong>Phone:</strong> 0923 727 2113</p><p><strong>Email:</strong> idoctorvisioncaremarketing@gmail.com</p><p><strong>Main Address:</strong> Gen T De Leon, Beside 3S Center, Valenzuela</p><p><strong>Hours:</strong> Mon-Fri 8am–7pm, Sat 9am–3pm</p></div></div><div><h3>Find Our Main Clinic</h3><div class="map-container"><iframe class="map-iframe" loading="lazy" src="${mapEmbed}" title="Map"></iframe></div><div class="map-footer"><a href="${directionsUrl}" target="_blank" class="directions-link">📍 Get Directions via Google Maps</a></div></div></div><div class="doctors-section"><div class="container"><h2 class="hero-title" style="font-size:2rem;">Meet Our Specialist Doctors</h2><div class="section-subtitle">Expert ophthalmologists and optometrists dedicated to your vision</div><div class="doctors-grid">${doctors.map(doc => `<div class="doctor-card"><div class="doctor-img"><img src="${doc.img}" alt="${doc.name}"></div><div class="doctor-info"><div class="doctor-name">${doc.name}</div><div class="doctor-title">${doc.title}</div><div class="doctor-specialty">${doc.specialty}</div><div class="doctor-desc">${doc.desc}</div><div class="doctor-contact">${doc.contact}</div></div></div>`).join('')}</div></div></div></div>`;
-  }
-
-  function renderHomepage() {
-    return `<div class="hero-home"><div class="container"><h1>👁 Clear Vision, Healthier Eyes</h1><p>Valenzuela's premier eye care clinic combining medical excellence with premium optical retail</p></div></div>
-      <div class="about-preview"><div class="container"><h2>About IDoctor Eye Clinic</h2><div class="about-text"><p>IDoctor Eye Clinic is a trusted eye care provider in Valenzuela City, dedicated to delivering comprehensive ophthalmology and optometry services. We blend advanced medical technology with compassionate patient care, offering everything from routine eye exams to specialized surgical consultations.</p><p style="margin-top: 16px;">Our team of experienced ophthalmologists and optometrists are committed to preserving and enhancing your vision. With state-of-the-art diagnostic equipment and a wide selection of premium eyewear, we ensure that every patient receives personalized, world-class eye care.</p></div><div class="stats-row"><div class="stat-item"><div class="stat-number">3+</div><div class="stat-label">Branches in Valenzuela</div></div><div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Years of Experience</div></div><div class="stat-item"><div class="stat-number">10K+</div><div class="stat-label">Happy Patients</div></div></div></div></div>
-      <div class="functions-section"><div class="container"><h2>What You Can Do Here</h2><div class="section-sub" style="text-align:center; margin-bottom:32px;">Explore the features of our website and take control of your eye health</div><div class="functions-grid"><div class="function-card" data-nav-function="products"><div class="function-icon">🛒</div><h3>Shop Eyewear</h3><p>Browse our collection of premium eyeglasses, sunglasses, and contact lenses.</p><button class="function-btn">Shop Now →</button></div><div class="function-card" data-nav-function="services"><div class="function-icon">🏥</div><h3>Medical Services</h3><p>Learn about our comprehensive eye care services and schedule a consultation.</p><button class="function-btn">View Services →</button></div><div class="function-card" data-nav-function="appointment"><div class="function-icon">📅</div><h3>Book Appointment</h3><p>Schedule your eye exam or consultation at any of our 3 convenient branches.</p><button class="function-btn">Book Now →</button></div></div></div></div>
-      <div class="why-choose"><div class="container"><h2>Why Choose IDoctor?</h2><div class="features-grid"><div class="feature"><div class="feature-icon">👨‍⚕️</div><h4>Expert Doctors</h4><p>Board-certified ophthalmologists</p></div><div class="feature"><div class="feature-icon">🔬</div><h4>Advanced Technology</h4><p>Latest diagnostic equipment</p></div><div class="feature"><div class="feature-icon">📍</div><h4>3 Convenient Branches</h4><p>Across Valenzuela City</p></div><div class="feature"><div class="feature-icon">❤️</div><h4>Compassionate Care</h4><p>Patient-first approach</p></div></div></div></div>`;
-  }
-
-  function renderServicesSection() {
-    return `<div class="container"><div class="page-hero"><h2 class="hero-title">Medical Eye Care in Valenzuela</h2><p>Expert diagnosis, surgery planning, and long-term vision health</p></div><div class="services-grid">${servicesList.map(s => `<div class="service-card"><h3>${s.title}</h3><p>${s.desc}</p></div>`).join('')}</div><div class="appointment-cta"><h3>📅 Ready to Schedule Your Appointment?</h3><p>Book a consultation with our eye specialists at any of our Valenzuela branches</p><button class="btn-appointment-large" id="servicesAppointmentBtn">Make an Appointment →</button></div></div>`;
-  }
-
-  function renderCurrentView() {
-    const el = document.getElementById("main-content");
-    if (currentView === "home") el.innerHTML = renderHomepage();
-    else if (currentView === "products") el.innerHTML = renderProductsSection();
-    else if (currentView === "services") el.innerHTML = renderServicesSection();
-    else if (currentView === "about") el.innerHTML = renderAboutSection();
-    else el.innerHTML = renderHomepage();
-    attachEvents();
-  }
-
-  function attachEvents() {
-    if (currentView === "products") {
-      document.querySelectorAll(".filter-btn").forEach(b => b.addEventListener("click", e => { activeCategory = b.dataset.cat; currentPage = 1; renderCurrentView(); }));
-      document.querySelectorAll(".page-btn").forEach(b => b.addEventListener("click", e => { currentPage = parseInt(b.dataset.page); renderCurrentView(); }));
-      document.querySelectorAll(".btn-shop").forEach(b => b.addEventListener("click", e => { 
-        const productName = b.getAttribute("data-product");
-        const productPrice = parseInt(b.getAttribute("data-price"));
-        alert(`✨ Added to cart: ${productName} (${formatPHP(productPrice)})\n\nVisit our clinic for prescription fitting and pickup!`);
-      }));
-      attachCustomizerEvents();
-    }
-    if (currentView === "services") {
-      const btn = document.getElementById("servicesAppointmentBtn");
-      if(btn) btn.onclick = () => openModal();
-    }
-    document.querySelectorAll("[data-nav-function]").forEach(card => {
-      card.addEventListener("click", (e) => {
-        const navTo = card.getAttribute("data-nav-function");
-        if(navTo === "products") { currentView = "products"; renderCurrentView(); window.scrollTo({top:0}); }
-        else if(navTo === "services") { currentView = "services"; renderCurrentView(); window.scrollTo({top:0}); }
-        else if(navTo === "appointment") openModal();
-      });
-    });
-  }
-
-  function renderBranchSelection() {
-    const container = document.getElementById("branchOptions");
-    if(!container) return;
-    container.innerHTML = branches.map(b => `
-      <div class="branch-card ${b.id === selectedBranchId ? 'selected' : ''}" data-branch-id="${b.id}">
-        <div class="branch-row">
-          <input type="radio" name="branchRadio" value="${b.id}" id="branch_${b.id}" class="branch-radio" ${b.id === selectedBranchId ? 'checked' : ''}>
-          <div class="branch-content">
-            <div class="branch-name">🏥 ${b.name}</div>
-            <div class="branch-address">📍 ${b.address}</div>
-            <div class="branch-hours">🕒 ${b.hours}</div>
+  <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="adminModalLabel">Stored Appointment Submissions</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
+            <p class="mb-0 text-muted small">Data source: <code>localStorage['idoctor_appointments']</code></p>
+            <button class="btn btn-outline-primary btn-sm" id="exportJsonBtn">Export as JSON</button>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped align-middle" id="adminTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Timestamp</th>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>Branch</th>
+                  <th>Type</th>
+                  <th>Service</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody"></tbody>
+            </table>
           </div>
         </div>
       </div>
-    `).join('');
-    
-    branches.forEach(b => {
-      const card = document.querySelector(`.branch-card[data-branch-id="${b.id}"]`);
-      const radio = document.getElementById(`branch_${b.id}`);
-      if(card && radio) {
-        const selectBranch = () => {
-          document.querySelectorAll('.branch-card').forEach(c => c.classList.remove('selected'));
-          card.classList.add('selected');
-          radio.checked = true;
-          selectedBranchId = b.id;
-        };
-        card.addEventListener('click', selectBranch);
-        radio.addEventListener('change', selectBranch);
-      }
-    });
-  }
+    </div>
+  </div>
 
-  function openModal() { 
-    const modal = document.getElementById("bookingModal"); 
-    document.getElementById("appointmentForm").reset(); 
-    selectedBranchId = 1; 
-    renderBranchSelection(); 
-    const examRadio = document.querySelector('input[name="appointmentService"][value="Eye Exam"]');
-    if(examRadio) examRadio.checked = true;
-    modal.style.visibility = "visible"; 
-    modal.style.opacity = "1"; 
-  }
-  function closeModal() { const m = document.getElementById("bookingModal"); m.style.visibility = "hidden"; m.style.opacity = "0"; }
-  function validateBook() {
-    const fn = document.getElementById("firstName")?.value.trim();
-    const ln = document.getElementById("lastName")?.value.trim();
-    const contact = document.getElementById("contactNumber")?.value.trim();
-    const date = document.getElementById("apptDate")?.value;
-    const time = document.getElementById("apptTime")?.value;
-    if(!fn || !ln || !contact || !date || !time) return alert("Please complete all required fields.");
-    const selectedBranch = branches.find(b => b.id === selectedBranchId);
-    alert(`✅ Appointment Confirmed!\n\nPatient: ${fn} ${ln}\nContact: ${contact}\n📍 Branch: ${selectedBranch?.name}\nAddress: ${selectedBranch?.address}\n\nWe will contact you shortly to confirm your schedule.`);
-    closeModal();
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    renderCurrentView();
-    document.querySelectorAll("[data-nav]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); const to = a.dataset.nav; if(to==="home") currentView="home"; else if(to==="products") currentView="products"; else if(to==="services") currentView="services"; else if(to==="about") currentView="about"; renderCurrentView(); window.scrollTo({top:0}); }));
-    document.getElementById("footerPortalLink")?.addEventListener("click", e => { e.preventDefault(); alert("🔐 Patient Portal: Coming soon!"); });
-    document.getElementById("confirmBookingBtn")?.addEventListener("click", validateBook);
-    document.getElementById("closeModalBtn")?.addEventListener("click", closeModal);
-    window.onclick = e => { if(e.target === document.getElementById("bookingModal")) closeModal(); };
-  });
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
 </body>
 </html>
