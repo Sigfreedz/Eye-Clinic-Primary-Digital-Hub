@@ -78,7 +78,10 @@ const lensTypes = [
   { name: 'Photochromic', price: 4060 }
 ];
 
-const APPOINTMENT_STORAGE_KEY = 'idoctor_appointments';
+emailjs.init('O2Fset1R3cyE4q6Fw');
+const EMAILJS_SERVICE_ID = 'service_j74f3rp';
+const EMAILJS_CLINIC_TEMPLATE_ID = 'template_l1c0cba';
+const EMAILJS_PATIENT_TEMPLATE_ID = 'template_wslvr6e';
 
 let currentView = 'home';
 let activeCategory = 'All';
@@ -87,7 +90,6 @@ let selectedFrame = frameStyles[0];
 let selectedLens = lensTypes[0];
 let selectedBranchId = 1;
 let bookingModal;
-let adminModal;
 
 const byId = (id) => document.getElementById(id);
 
@@ -552,41 +554,6 @@ function renderBranchSelection() {
   });
 }
 
-function getStoredAppointments() {
-  try {
-    const raw = localStorage.getItem(APPOINTMENT_STORAGE_KEY);
-    if (!raw) return [];
-    const decoded = decodeStoragePayload(raw);
-    if (!decoded) return [];
-    const parsed = JSON.parse(decoded);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveStoredAppointments(data) {
-  const serialized = JSON.stringify(data);
-  const encoded = encodeStoragePayload(serialized);
-  localStorage.setItem(APPOINTMENT_STORAGE_KEY, encoded);
-}
-
-function encodeStoragePayload(value) {
-  try {
-    return btoa(unescape(encodeURIComponent(value)));
-  } catch {
-    return '';
-  }
-}
-
-function decodeStoragePayload(value) {
-  try {
-    return decodeURIComponent(escape(atob(value)));
-  } catch {
-    return '';
-  }
-}
-
 function showBookingFeedback(message, type = 'success') {
   const box = byId('bookingFeedback');
   if (!box) return;
@@ -625,8 +592,7 @@ function buildSubmissionPayload() {
     appointmentType: selectedType,
     specificService: byId('specificService')?.value || '',
     preferredDate: byId('apptDate')?.value || '',
-    preferredTime: byId('apptTime')?.value || '',
-    timestamp: new Date().toISOString()
+    preferredTime: byId('apptTime')?.value || ''
   };
 }
 
@@ -635,6 +601,7 @@ function isFormValid(payload) {
     payload.firstName
     && payload.lastName
     && payload.contactNumber
+    && payload.emailAddress
     && payload.branchId
     && payload.appointmentType
     && payload.specificService
@@ -643,61 +610,9 @@ function isFormValid(payload) {
   );
 }
 
-function renderAdminTable() {
-  const tbody = byId('adminTableBody');
-  if (!tbody) return;
-
-  const submissions = getStoredAppointments();
-  if (submissions.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="10" class="text-center text-muted">No stored submissions yet.</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = submissions.map((entry, index) => `
-    <tr>
-      <td>${index + 1}</td>
-      <td>${entry.timestamp || ''}</td>
-      <td>${entry.firstName || ''} ${entry.lastName || ''}</td>
-      <td>${entry.contactNumber || ''}</td>
-      <td>${entry.emailAddress || ''}</td>
-      <td>${entry.branchName || ''}</td>
-      <td>${entry.appointmentType || ''}</td>
-      <td>${entry.specificService || ''}</td>
-      <td>${entry.preferredDate || ''}</td>
-      <td>${entry.preferredTime || ''}</td>
-    </tr>
-  `).join('');
-}
-
-function openAdminModal() {
-  renderAdminTable();
-  adminModal?.show();
-}
-
-function exportSubmissions() {
-  const submissions = getStoredAppointments();
-  const blob = new Blob([JSON.stringify(submissions, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement('a');
-  anchor.href = url;
-  anchor.download = 'appointments.json';
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  URL.revokeObjectURL(url);
-}
-
-window.exportSubmissions = exportSubmissions;
-
-function handleAppointmentSubmit(event) {
+async function handleAppointmentSubmit(event) {
   event.preventDefault();
   clearBookingFeedback();
-
-  const contactValue = (byId('contactNumber')?.value || '').trim().toLowerCase();
-  if (contactValue === 'admin') {
-    openAdminModal();
-    return;
-  }
 
   const payload = buildSubmissionPayload();
   if (!isFormValid(payload)) {
@@ -705,12 +620,40 @@ function handleAppointmentSubmit(event) {
     return;
   }
 
-  const stored = getStoredAppointments();
-  stored.push(payload);
-  saveStoredAppointments(stored);
+  const fullName = `${payload.firstName} ${payload.lastName}`.trim();
+  const clinicParams = {
+    patient_name: fullName,
+    contact_number: payload.contactNumber,
+    patient_email: payload.emailAddress,
+    branch: payload.branchName,
+    appointment_type: payload.appointmentType,
+    service: payload.specificService,
+    preferred_date: payload.preferredDate,
+    preferred_time: payload.preferredTime
+  };
+  const patientParams = {
+    patient_name: fullName,
+    patient_email: payload.emailAddress,
+    branch: payload.branchName,
+    service: payload.specificService,
+    preferred_date: payload.preferredDate,
+    preferred_time: payload.preferredTime
+  };
 
-  showBookingFeedback('Appointment saved successfully. We will contact you shortly to confirm your schedule.', 'success');
-  setTimeout(() => bookingModal?.hide(), 1100);
+  try {
+    await Promise.all([
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CLINIC_TEMPLATE_ID, clinicParams),
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_PATIENT_TEMPLATE_ID, patientParams)
+    ]);
+
+    showBookingFeedback("Your appointment request has been sent! We'll contact you shortly to confirm.", 'success');
+    byId('appointmentForm')?.reset();
+    selectedBranchId = 1;
+    renderBranchSelection();
+  } catch (error) {
+    console.error('EmailJS error:', error);
+    showBookingFeedback('Something went wrong. Please try again or contact us directly.', 'danger');
+  }
 }
 
 function setNavbarScrollEffect() {
@@ -721,7 +664,6 @@ function setNavbarScrollEffect() {
 
 document.addEventListener('DOMContentLoaded', () => {
   bookingModal = new bootstrap.Modal(byId('bookingModal'));
-  adminModal = new bootstrap.Modal(byId('adminModal'));
 
   renderCurrentView();
   renderBranchSelection();
@@ -735,7 +677,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   byId('navBookBtn')?.addEventListener('click', openModal);
   byId('appointmentForm')?.addEventListener('submit', handleAppointmentSubmit);
-  byId('exportJsonBtn')?.addEventListener('click', exportSubmissions);
 
   window.addEventListener('scroll', setNavbarScrollEffect, { passive: true });
   setNavbarScrollEffect();

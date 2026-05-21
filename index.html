@@ -102,8 +102,8 @@
                 <input type="text" class="form-control" id="contactNumber" required placeholder="0923 727 2113">
               </div>
               <div class="col-md-6">
-                <label for="emailAddress" class="form-label">Email</label>
-                <input type="email" class="form-control" id="emailAddress" placeholder="patient@example.com">
+                <label for="emailAddress" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="emailAddress" required placeholder="patient@example.com">
               </div>
               <div class="col-12">
                 <label class="form-label">Select Branch *</label>
@@ -165,43 +165,8 @@
     </div>
   </div>
 
-  <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content border-0 shadow-lg rounded-4">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="adminModalLabel">Stored Appointment Submissions</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
-            <p class="mb-0 text-muted small">Data source: <code>localStorage['idoctor_appointments']</code></p>
-            <button class="btn btn-outline-primary btn-sm" id="exportJsonBtn">Export as JSON</button>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-striped align-middle" id="adminTable">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Timestamp</th>
-                  <th>Name</th>
-                  <th>Contact</th>
-                  <th>Email</th>
-                  <th>Branch</th>
-                  <th>Type</th>
-                  <th>Service</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody id="adminTableBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
