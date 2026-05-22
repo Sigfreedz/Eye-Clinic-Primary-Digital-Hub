@@ -156,7 +156,6 @@ function applyTheme(theme, persist = false) {
 }
 
 function initializeTheme(initialTheme) {
-  setThemeAttributes(initialTheme);
   cacheThemeToggleElements();
   updateThemeToggleUI(initialTheme);
 
