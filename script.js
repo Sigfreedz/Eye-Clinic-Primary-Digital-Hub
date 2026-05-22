@@ -82,7 +82,6 @@ emailjs.init('O2Fset1R3cyE4q6Fw');
 const EMAILJS_SERVICE_ID = 'service_j74f3rp';
 const EMAILJS_CLINIC_TEMPLATE_ID = 'template_l1c0cba';
 const EMAILJS_PATIENT_TEMPLATE_ID = 'template_wslvr6e';
-const PREVIEW_TOOL_DISCLAIMER = 'This is a preview tool. Final pricing and lens fitting are done in-clinic after consultation.';
 
 let currentView = 'home';
 let activeCategory = 'All';
@@ -280,8 +279,8 @@ function renderCustomizer() {
               </div>
             </div>
 
-            <button class="btn btn-brand w-100 mt-3" id="addToCartBtn">Reserve for Fitting →</button>
-            <p class="alert alert-info small text-center mt-3 mb-0 py-2">💡 ${PREVIEW_TOOL_DISCLAIMER}</p>
+            <button class="btn btn-brand w-100 mt-3" id="addToCartBtn">Add to Cart & Request Prescription Fitting →</button>
+            <p class="small text-muted text-center mt-2 mb-0">* Prices are in Philippine Pesos (₱). Visit our clinic for prescription lens fitting.</p>
           </div>
         </div>
       </div>
@@ -525,7 +524,7 @@ function attachCustomizerEvents() {
 
   byId('addToCartBtn')?.addEventListener('click', () => {
     const total = selectedFrame.price + selectedLens.price;
-    alert(`✅ Fitting request noted!\nFrame: ${selectedFrame.name} (${formatPHP(selectedFrame.price)})\nLens: ${selectedLens.name} (${formatPHP(selectedLens.price)})\nEstimated total: ${formatPHP(total)}\n\n${PREVIEW_TOOL_DISCLAIMER}`);
+    alert(`✅ Added to Cart!\nFrame: ${selectedFrame.name} (${formatPHP(selectedFrame.price)})\nLens: ${selectedLens.name} (${formatPHP(selectedLens.price)})\nTotal: ${formatPHP(total)}\n\nVisit our clinic for prescription fitting.`);
   });
 }
 
@@ -676,10 +675,11 @@ async function handleAppointmentSubmit(event) {
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_PATIENT_TEMPLATE_ID, patientParams)
     ]);
 
-    bookingModal?.hide();
     if (bookingConfirmationModal) {
+      bookingModal?.hide();
       bookingConfirmationModal.show();
     } else {
+      bookingModal?.hide();
       alert('✅ Appointment request submitted! Please check your email for confirmation details.');
     }
     byId('appointmentForm')?.reset();
