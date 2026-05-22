@@ -82,6 +82,9 @@ emailjs.init('O2Fset1R3cyE4q6Fw');
 const EMAILJS_SERVICE_ID = 'service_j74f3rp';
 const EMAILJS_CLINIC_TEMPLATE_ID = 'template_l1c0cba';
 const EMAILJS_PATIENT_TEMPLATE_ID = 'template_wslvr6e';
+const THEME_STORAGE_KEY = 'idoctor-theme';
+const THEME_DARK = 'dark';
+const THEME_LIGHT = 'light';
 
 let currentView = 'home';
 let activeCategory = 'All';
@@ -95,6 +98,77 @@ let bookingConfirmationModal;
 const byId = (id) => document.getElementById(id);
 
 const formatPHP = (value) => `₱${Number(value).toLocaleString()}`;
+
+function getStoredTheme() {
+  try {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    return savedTheme === THEME_DARK || savedTheme === THEME_LIGHT ? savedTheme : null;
+  } catch {
+    return null;
+  }
+}
+
+function getSystemTheme() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? THEME_DARK : THEME_LIGHT;
+}
+
+function updateThemeToggleUI(theme) {
+  const toggleButton = byId('themeToggle');
+  if (!toggleButton) return;
+
+  const icon = toggleButton.querySelector('[data-theme-icon]');
+  const label = toggleButton.querySelector('[data-theme-label]');
+  const isDark = theme === THEME_DARK;
+
+  toggleButton.setAttribute('aria-pressed', String(isDark));
+  toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  if (icon) icon.className = `fa-solid ${isDark ? 'fa-sun' : 'fa-moon'}`;
+  if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+}
+
+function applyTheme(theme, persist = false) {
+  const selectedTheme = theme === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+  document.documentElement.setAttribute('data-theme', selectedTheme);
+  document.documentElement.setAttribute('data-bs-theme', selectedTheme);
+
+  if (document.body) {
+    document.body.setAttribute('data-bs-theme', selectedTheme);
+  }
+
+  updateThemeToggleUI(selectedTheme);
+
+  if (persist) {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, selectedTheme);
+    } catch {}
+  }
+}
+
+function initializeTheme() {
+  const savedTheme = getStoredTheme();
+  const initialTheme = savedTheme || getSystemTheme();
+  applyTheme(initialTheme);
+
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const handleSystemThemeChange = (event) => {
+    if (getStoredTheme()) return;
+    applyTheme(event.matches ? THEME_DARK : THEME_LIGHT);
+  };
+
+  if (typeof mediaQuery.addEventListener === 'function') {
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+  } else if (typeof mediaQuery.addListener === 'function') {
+    mediaQuery.addListener(handleSystemThemeChange);
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+  const nextTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+  applyTheme(nextTheme, true);
+}
+
+initializeTheme();
 
 function sectionHeader(tag, title, subtitle, centered = true) {
   return `
@@ -704,6 +778,8 @@ document.addEventListener('DOMContentLoaded', () => {
     bookingConfirmationModal = new bootstrap.Modal(bookingConfirmationModalElement);
   }
 
+  updateThemeToggleUI(document.documentElement.getAttribute('data-theme') || THEME_LIGHT);
+
   renderCurrentView();
   renderBranchSelection();
 
@@ -715,6 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   byId('navBookBtn')?.addEventListener('click', openModal);
+  byId('themeToggle')?.addEventListener('click', toggleTheme);
   byId('appointmentForm')?.addEventListener('submit', handleAppointmentSubmit);
 
   window.addEventListener('scroll', setNavbarScrollEffect, { passive: true });
