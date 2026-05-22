@@ -94,6 +94,9 @@ let selectedLens = lensTypes[0];
 let selectedBranchId = 1;
 let bookingModal;
 let bookingConfirmationModal;
+let themeToggleButton;
+let themeToggleIcon;
+let themeToggleLabel;
 
 const byId = (id) => document.getElementById(id);
 
@@ -112,18 +115,24 @@ function getSystemTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? THEME_DARK : THEME_LIGHT;
 }
 
-function updateThemeToggleUI(theme) {
-  const toggleButton = byId('themeToggle');
-  if (!toggleButton) return;
+function cacheThemeToggleElements() {
+  themeToggleButton = byId('themeToggle');
+  themeToggleIcon = themeToggleButton?.querySelector('[data-theme-icon]') || null;
+  themeToggleLabel = themeToggleButton?.querySelector('[data-theme-label]') || null;
+}
 
-  const icon = toggleButton.querySelector('[data-theme-icon]');
-  const label = toggleButton.querySelector('[data-theme-label]');
+function updateThemeToggleUI(theme) {
+  if (!themeToggleButton) {
+    cacheThemeToggleElements();
+  }
+  if (!themeToggleButton) return;
+
   const isDark = theme === THEME_DARK;
 
-  toggleButton.setAttribute('aria-pressed', String(isDark));
-  toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-  if (icon) icon.className = `fa-solid ${isDark ? 'fa-sun' : 'fa-moon'}`;
-  if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+  themeToggleButton.setAttribute('aria-pressed', String(isDark));
+  themeToggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  if (themeToggleIcon) themeToggleIcon.className = `fa-solid ${isDark ? 'fa-sun' : 'fa-moon'}`;
+  if (themeToggleLabel) themeToggleLabel.textContent = isDark ? 'Light Mode' : 'Dark Mode';
 }
 
 function setThemeAttributes(theme) {
@@ -146,10 +155,9 @@ function applyTheme(theme, persist = false) {
   }
 }
 
-function initializeTheme() {
-  const savedTheme = getStoredTheme();
-  const initialTheme = savedTheme || getSystemTheme();
+function initializeTheme(initialTheme) {
   setThemeAttributes(initialTheme);
+  cacheThemeToggleElements();
   updateThemeToggleUI(initialTheme);
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -171,7 +179,8 @@ function toggleTheme() {
   applyTheme(nextTheme, true);
 }
 
-setThemeAttributes(getStoredTheme() || getSystemTheme());
+const initialThemePreference = getStoredTheme() || getSystemTheme();
+setThemeAttributes(initialThemePreference);
 
 function sectionHeader(tag, title, subtitle, centered = true) {
   return `
@@ -775,7 +784,7 @@ function setNavbarScrollEffect() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initializeTheme();
+  initializeTheme(initialThemePreference);
 
   bookingModal = new bootstrap.Modal(byId('bookingModal'));
   const bookingConfirmationModalElement = byId('bookingConfirmationModal');
