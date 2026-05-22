@@ -126,15 +126,17 @@ function updateThemeToggleUI(theme) {
   if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
 }
 
+function setThemeAttributes(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.setAttribute('data-bs-theme', theme);
+  if (document.body) {
+    document.body.setAttribute('data-bs-theme', theme);
+  }
+}
+
 function applyTheme(theme, persist = false) {
   const selectedTheme = theme === THEME_DARK ? THEME_DARK : THEME_LIGHT;
-  document.documentElement.setAttribute('data-theme', selectedTheme);
-  document.documentElement.setAttribute('data-bs-theme', selectedTheme);
-
-  if (document.body) {
-    document.body.setAttribute('data-bs-theme', selectedTheme);
-  }
-
+  setThemeAttributes(selectedTheme);
   updateThemeToggleUI(selectedTheme);
 
   if (persist) {
@@ -147,7 +149,8 @@ function applyTheme(theme, persist = false) {
 function initializeTheme() {
   const savedTheme = getStoredTheme();
   const initialTheme = savedTheme || getSystemTheme();
-  applyTheme(initialTheme);
+  setThemeAttributes(initialTheme);
+  updateThemeToggleUI(initialTheme);
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const handleSystemThemeChange = (event) => {
@@ -168,7 +171,7 @@ function toggleTheme() {
   applyTheme(nextTheme, true);
 }
 
-initializeTheme();
+setThemeAttributes(getStoredTheme() || getSystemTheme());
 
 function sectionHeader(tag, title, subtitle, centered = true) {
   return `
@@ -772,13 +775,13 @@ function setNavbarScrollEffect() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initializeTheme();
+
   bookingModal = new bootstrap.Modal(byId('bookingModal'));
   const bookingConfirmationModalElement = byId('bookingConfirmationModal');
   if (bookingConfirmationModalElement) {
     bookingConfirmationModal = new bootstrap.Modal(bookingConfirmationModalElement);
   }
-
-  updateThemeToggleUI(document.documentElement.getAttribute('data-theme') || THEME_LIGHT);
 
   renderCurrentView();
   renderBranchSelection();
