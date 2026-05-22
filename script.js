@@ -111,10 +111,6 @@ function getStoredTheme() {
   }
 }
 
-function getSystemTheme() {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? THEME_DARK : THEME_LIGHT;
-}
-
 function cacheThemeToggleElements() {
   themeToggleButton = byId('themeToggle');
   themeToggleIcon = themeToggleButton?.querySelector('[data-theme-icon]') || null;
@@ -158,14 +154,6 @@ function applyTheme(theme, persist = false) {
 function initializeTheme(initialTheme) {
   cacheThemeToggleElements();
   updateThemeToggleUI(initialTheme);
-
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  const handleSystemThemeChange = (event) => {
-    if (getStoredTheme()) return;
-    applyTheme(event.matches ? THEME_DARK : THEME_LIGHT);
-  };
-
-  mediaQuery.addEventListener('change', handleSystemThemeChange);
 }
 
 function toggleTheme() {
@@ -174,7 +162,7 @@ function toggleTheme() {
   applyTheme(nextTheme, true);
 }
 
-const initialThemePreference = getStoredTheme() || getSystemTheme();
+const initialThemePreference = getStoredTheme() || THEME_LIGHT;
 setThemeAttributes(initialThemePreference);
 
 function sectionHeader(tag, title, subtitle, centered = true) {
