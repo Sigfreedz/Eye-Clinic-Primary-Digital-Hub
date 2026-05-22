@@ -165,11 +165,7 @@ function initializeTheme(initialTheme) {
     applyTheme(event.matches ? THEME_DARK : THEME_LIGHT);
   };
 
-  if (typeof mediaQuery.addEventListener === 'function') {
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-  } else if (typeof mediaQuery.addListener === 'function') {
-    mediaQuery.addListener(handleSystemThemeChange);
-  }
+  mediaQuery.addEventListener('change', handleSystemThemeChange);
 }
 
 function toggleTheme() {
