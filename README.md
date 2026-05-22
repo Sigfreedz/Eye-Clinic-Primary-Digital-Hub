@@ -15,13 +15,12 @@ Dark mode is implemented globally across the site, including:
 
 Theme initialization follows:
 1. Saved user preference from `localStorage` (`idoctor-theme`)
-2. System preference (`prefers-color-scheme`)
-3. Light mode fallback
+2. Light mode default
 
 ### User preference persistence
 
 - Toggling the navbar theme button saves the selected theme in `localStorage`.
-- After a user saves a preference, that preference overrides later system theme changes until toggled again.
+- After a user saves a preference, that preference is used on future visits until toggled again.
 
 ### Notes
 
