@@ -90,6 +90,7 @@ let selectedFrame = frameStyles[0];
 let selectedLens = lensTypes[0];
 let selectedBranchId = 1;
 let bookingModal;
+let bookingConfirmationModal;
 
 const byId = (id) => document.getElementById(id);
 
@@ -674,7 +675,13 @@ async function handleAppointmentSubmit(event) {
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_PATIENT_TEMPLATE_ID, patientParams)
     ]);
 
-    showBookingFeedback("Your appointment request has been sent! We'll contact you shortly to confirm.", 'success');
+    if (bookingConfirmationModal) {
+      bookingModal?.hide();
+      bookingConfirmationModal.show();
+    } else {
+      bookingModal?.hide();
+      alert('✅ Appointment request submitted! Please check your email for confirmation details.');
+    }
     byId('appointmentForm')?.reset();
     selectedBranchId = 1;
     renderBranchSelection();
@@ -692,6 +699,10 @@ function setNavbarScrollEffect() {
 
 document.addEventListener('DOMContentLoaded', () => {
   bookingModal = new bootstrap.Modal(byId('bookingModal'));
+  const bookingConfirmationModalElement = byId('bookingConfirmationModal');
+  if (bookingConfirmationModalElement) {
+    bookingConfirmationModal = new bootstrap.Modal(bookingConfirmationModalElement);
+  }
 
   renderCurrentView();
   renderBranchSelection();
